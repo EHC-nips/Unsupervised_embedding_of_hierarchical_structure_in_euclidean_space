@@ -40,15 +40,19 @@ if __name__ == "__main__":
     train_loader, synthetic_data, cla = create_data_loader(400, N_CLASS,MARGIN,VAR,DIM,N)
     #train VAE
     vae = VAE(DIM, HID_DIM)
-    #train_vae(vae, train_loader, 80)
-    #torch.save(vae.state_dict(), "parameters/VAE_parameters_C{}_M{}.pth".format(args.n_class, args.margin))
-    vae.load_state_dict(torch.load("parameters/VAE_parameters_C{}_M{}.pth".format(args.n_class, args.margin)))
+    if not os.path.exists("parameters/VAE_parameters_C{}_M{}.pth".format(args.n_class, args.margin)):
+        train_vae(vae, train_loader, 80)
+        torch.save(vae.state_dict(), "parameters/VAE_parameters_C{}_M{}.pth".format(args.n_class, args.margin))
+    else:
+        vae.load_state_dict(torch.load("parameters/VAE_parameters_C{}_M{}.pth".format(args.n_class, args.margin)))
     # train VaDE
     model = VaDE(N_CLASS, HID_DIM, DIM)
-    model.pre_train(train_loader,pre_epoch=50)
-    train(model, train_loader, 100, lr = lr)
-    torch.save(model.state_dict(), "parameters/VaDE_parameters_C{}_M{}.pth".format(args.n_class, args.margin))
-    #model.load_state_dict(torch.load("parameters/VaDE_parameters_C{}_M{}.pth".format(args.n_class, args.margin)))
+    if not os.path.exists("parameters/VaDE_parameters_C{}_M{}.pth".format(args.n_class, args.margin)):
+        model.pre_train(train_loader,pre_epoch=50)
+        train(model, train_loader, 100, lr = lr)
+        torch.save(model.state_dict(), "parameters/VaDE_parameters_C{}_M{}.pth".format(args.n_class, args.margin))
+    else:
+        model.load_state_dict(torch.load("parameters/VaDE_parameters_C{}_M{}.pth".format(args.n_class, args.margin)))
     # begin evaluation 
     
     _, vae_mean, _ = vae(torch.from_numpy(synthetic_data).float())
@@ -56,14 +60,17 @@ if __name__ == "__main__":
     scaled_mean = transformation(model, synthetic_data)
     pca = PCA(n_components = HID_DIM)
     projection = pca.fit_transform(synthetic_data)
-    print("VAE:", compute_purity_average(vae_mean.detach().numpy(), cla, N_CLASS, 2048, 50, method = args.linkage_method))
+
+    #begin evaluation:
+    print("Begin evaluation ... ")
+    print("VAE DP:", compute_purity_average(vae_mean.detach().numpy(), cla, N_CLASS, 2048, 50, method = args.linkage_method))
     #print("Transform:", compute_purity_average(scaled_mean.detach().numpy(), cla, N_CLASS, 2048, 50, method = args.linkage_method))
-    print("VaDE:", compute_purity_average(mean.detach().numpy(), cla, N_CLASS, 2048, 50, method = args.linkage_method))
-    #print("PCA:", compute_purity_average(projection, cla, N_CLASS, 2048, 50, method = args.linkage_method))
-    #print("Origin:", compute_purity_average(synthetic_data, cla, N_CLASS, 2048, 50, method = args.linkage_method))
+    print("VaDE DP:", compute_purity_average(mean.detach().numpy(), cla, N_CLASS, 2048, 50, method = args.linkage_method))
+    print("PCA DP:", compute_purity_average(projection, cla, N_CLASS, 2048, 50, method = args.linkage_method))
+    print("Origin DP:", compute_purity_average(synthetic_data, cla, N_CLASS, 2048, 50, method = args.linkage_method))
     
-    print(compute_MW_objective_average(N_CLASS, vae_mean.detach().numpy(), cla, 2048, 50, method = args.linkage_method))
+    print(compute_MW_objective_average("VAE MW:", N_CLASS, vae_mean.detach().numpy(), cla, 2048, 50, method = args.linkage_method))
     #print(compute_MW_objective_average(N_CLASS, scaled_mean.detach().numpy(), cla, 2048, 50, method = args.linkage_method))
-    print(compute_MW_objective_average(N_CLASS, mean.detach().numpy(), cla, 2048, 50, method = args.linkage_method))
-    #print(compute_MW_objective_average(N_CLASS, projection, cla, 2048, 50, method = args.linkage_method))
-    #print(compute_MW_objective_average(N_CLASS, synthetic_data, cla, 2048, 50, method = args.linkage_method))
+    print(compute_MW_objective_average("VaDE MW:", N_CLASS, mean.detach().numpy(), cla, 2048, 50, method = args.linkage_method))
+    print(compute_MW_objective_average("PCA MW", N_CLASS, projection, cla, 2048, 50, method = args.linkage_method))
+    print(compute_MW_objective_average("Origin MW", N_CLASS, synthetic_data, cla, 2048, 50, method = args.linkage_method))
