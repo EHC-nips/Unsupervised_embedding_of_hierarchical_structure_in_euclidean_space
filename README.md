@@ -23,22 +23,25 @@ python train.py --input-data <path_to_data> --alpha 10 --beta 20
 
 > 📋Describe how to train the models, with example commands on how to train the models in your paper, including the full training procedure and appropriate hyperparameters.
 
-## Evaluation
-
-To evaluate my model on ImageNet, run:
-
-```eval
-python eval.py --model-file mymodel.pth --benchmark imagenet
-```
-
-> 📋Describe how to evaluate the trained models on benchmarks reported in the paper, give commands that produce the results (section below).
-
 ## Pre-trained Models
 
 You can download pretrained models here:
 
-- Download parameters for CIFAR100 experiments to `CIFAR100/parameters/` using [this link](https://drive.google.com/file/d/1QljVdElZtRAM9b6kLqjCDUUeWETQ8u7a/view?usp=sharing) <br>
+- Download parameters for CIFAR25 experiments to `CIFAR25/parameters/` using [this link](https://drive.google.com/file/d/1QljVdElZtRAM9b6kLqjCDUUeWETQ8u7a/view?usp=sharing) <br>
 - Download reuters10k data to `reuters/dataset/reuters10k` using [this link](https://drive.google.com/file/d/13o7XuyqtzqJD8V7OcAZdIWfKo8GmZB-B/view?usp=sharing) <br>
+
+
+## Evaluation
+
+To evaluate on MNIST, run:
+
+```
+cd MNIST/
+python MNIST_experiments.py --linkage_method ward --embedding_method VaDE --rescaling_transform
+```
+
+> 📋The same procedure applies to CIFAR-25 dataset.
+
 
 ## Results
 
