@@ -1,9 +1,4 @@
 
-Code for the paper "Unsupervised Embedding of Hierarchical Structure in Euclidean Space" <br>
-
-All the results in the paper can be achieved by running
-`python NAME_OF_DATASET_experiments.py`
-<br>
 # Unsupervised Embedding of Hierarchical Structure in Euclidean Space
 
 This repository is the official implementation of [Unsupervised Embedding of Hierarchical Structure in Euclidean Space](https://arxiv.org). 
@@ -17,8 +12,6 @@ To install requirements:
 ```setup
 pip install -r requirements.txt
 ```
-
-> 📋Describe how to set up the environment, e.g. pip/conda/docker commands, download datasets, etc...
 
 ## Training
 
