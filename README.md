@@ -15,17 +15,18 @@ pip install -r requirements.txt
 
 ## Training
 
-To train the model(s) in the paper, run this command:
+To train and evaluate the model on synthetic data, run this command:
 
-```train
-python train.py --input-data <path_to_data> --alpha 10 --beta 20
+```
+cd synthetic/
+python synthetic_experiments.py --n_class 8 --margin 8 --variance 1 --dim 100 --hidden_dim 3 --linkage_method ward --learning_rate 1e-3
 ```
 
-> 📋Describe how to train the models, with example commands on how to train the models in your paper, including the full training procedure and appropriate hyperparameters.
+> 📋The above command will give you the result for the BTGM in Figure 1 in our paper. 
 
 ## Pre-trained Models
 
-You can download pretrained models here:
+We provide the pre-trained parameters for MNIST and CIFAR-25 (both in Pytorch) and reuters (from the [original implementation of VaDE](https://github.com/slim1017/VaDE)). You can download pretrained models here:
 
 - Download parameters for CIFAR25 experiments to `CIFAR25/parameters/` using [this link](https://drive.google.com/file/d/1QljVdElZtRAM9b6kLqjCDUUeWETQ8u7a/view?usp=sharing) <br>
 - Download reuters10k data to `reuters/dataset/reuters10k` using [this link](https://drive.google.com/file/d/13o7XuyqtzqJD8V7OcAZdIWfKo8GmZB-B/view?usp=sharing) <br>
@@ -45,14 +46,13 @@ python MNIST_experiments.py --linkage_method ward --embedding_method VaDE --resc
 
 ## Results
 
-Our model achieves the following performance on :
+Our proposed method achieves the following performance in terms of Dendrogram Purity and Moseley-Wang's objective :
 
-### [Image Classification on ImageNet](https://paperswithcode.com/sota/image-classification-on-imagenet)
 
-| Model name         | Top 1 Accuracy  | Top 5 Accuracy |
-| ------------------ |---------------- | -------------- |
-| My awesome model   |     85%         |      95%       |
-
+| Model name         |      MNIST      |    CIFAR-25    |     reuters     |
+| ------------------ |---------------- | -------------- | --------------- |
+| VaDE+Ward+Trans.(DP)|      0.870      |     0.120      |      0.670      |
+| VaDE+Ward+Trans.(MW)|      0.948      |     0.465      |      0.756      |
 
 ## Contributing
 
