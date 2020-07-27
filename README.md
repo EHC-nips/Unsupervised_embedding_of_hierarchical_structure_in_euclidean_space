@@ -3,7 +3,6 @@
 
 This repository is the official implementation of [Unsupervised Embedding of Hierarchical Structure in Euclidean Space](https://arxiv.org). 
 
-> 📋Optional: include a graphic explaining your approach/main result, bibtex entry, link to demos, blog posts and tutorials
 
 ## Requirements
 
