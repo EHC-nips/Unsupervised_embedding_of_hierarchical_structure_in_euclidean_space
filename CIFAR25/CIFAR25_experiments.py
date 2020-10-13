@@ -37,17 +37,20 @@ if __name__ == "__main__":
 
     #generate synthetic data
     
-    vae = VAE()
-    vae.load_state_dict(torch.load("parameters/cifar100_vae.pth", map_location=torch.device('cpu')))
+    #vae = VAE()
+    #vae.load_state_dict(torch.load("parameters/cifar100_vae.pth", map_location=torch.device('cpu')))
     
     model = VaDE(3*32*32, 20, 25)
     model.load_state_dict(torch.load("parameters/parameters_vade_linear_25classes_cifar100_subset.pth", map_location=torch.device('cpu')))
     
     # begin evaluation 
-    print("DP:", compute_purity_average(model, X, Y, 5, 80, eval = emb, transform=arg.rescaling_transform, method = method, VERBOSE = Fasle))
-    print("MW:", compute_MW_objective_average(model, X, Y, 25, 80, eval = emb, transform=arg.rescaling_transform, method = method, VERBOSE = Fasle))
-
-    """
+    print("Origin MW:", compute_MW_objective_average(model, X, Y, 25, 500, repeat, eval = "Origin", method = method, VERBOSE = True))
+    #print("DP:", compute_purity_average(model, X, Y, 5, 500, repeat, eval = emb, transform=args.rescaling_transform, method = method, VERBOSE = True))
+    #print("MW:", compute_MW_objective_average(model, X, Y, 25, 500, repeat, eval = emb, transform=args.rescaling_transform, method = method, VERBOSE = True))
+    #print("VaDE transformed DP:", compute_purity_average(model, X, Y, 5, 500, repeat, eval = "VaDE", transform=True, method = method, VERBOSE = True))
+    #print("VaDE transformed MW:", compute_MW_objective_average(model, X, Y, 25, 500, repeat, eval = "VaDE",transform=True, method = method, VERBOSE = True))
+    
+    '''
     print("VAE DP:", compute_purity_average(vae, X, Y, 5, 50, eval = "VAE", method = method, VERBOSE = True))
     print("VaDE transformed DP:", compute_purity_average(model, X, Y, 5, 50, eval = "VaDE", transform=True, method = method, VERBOSE = True))
     print("VaDE DP:", compute_purity_average(model, X, Y, 5, 50, eval = "VaDE", method = method, VERBOSE = True))
@@ -59,7 +62,7 @@ if __name__ == "__main__":
     print("VaDE MW:", compute_MW_objective_average(model, X, Y, 25, 50, eval = "VaDE", method = method, VERBOSE = True))
     print("PCA MW:", compute_MW_objective_average(model, X, Y, 25, 50, eval = "PCA", method = method, VERBOSE = True))
     print("Origin MW:", compute_MW_objective_average(model, X, Y, 25, 50, eval = "Origin", method = method, VERBOSE = True))
-    '''
+    
     
     
     
@@ -70,6 +73,6 @@ if __name__ == "__main__":
         print("VaDE transformed DP:", compute_purity_average(model, X, Y, 25, 50, eval = "VaDE", transform=True, method = method, VERBOSE = True, super_class = False))
         print("VaDE transformed MW:", compute_MW_objective_average(model, X, Y, 25, 50, eval = "VaDE",transform=True, method = method, VERBOSE = True))
         
-
+'''
     
     

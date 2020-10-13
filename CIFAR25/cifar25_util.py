@@ -82,7 +82,7 @@ def transformation(model, data, rate = 5):
     scaled_mean = (mean - cluster_means) + scaled_cluster_means
     return scaled_mean.detach()
 
-def compute_purity_average(model, data, cla, n_class = 10, repeat = 50, method = "ward", eval = "VaDE", transform = False, VERBOSE = False, super_class = True):
+def compute_purity_average(model, data, cla, n_class = 10, num = 100, repeat = 50, method = "ward", eval = "VaDE", transform = False, VERBOSE = False, super_class = True):
     purity = []
     print("repeat:", repeat)
     cifar100_data = []
@@ -93,9 +93,9 @@ def compute_purity_average(model, data, cla, n_class = 10, repeat = 50, method =
         test_X = torch.Tensor([])
         test_Y = np.array([])
         for j in range(25):
-            index = np.random.choice(np.arange(600), 64)
+            index = np.random.choice(np.arange(600), num)
             test_X = torch.cat([test_X, cifar100_data[j][index]])
-            test_Y = np.concatenate([test_Y, j * np.ones(64)])
+            test_Y = np.concatenate([test_Y, j * np.ones(num)])
 
         h_Y = np.zeros_like(test_Y)
         h_Y[np.where(test_Y >= 5)] = 1
@@ -130,7 +130,7 @@ def compute_purity_average(model, data, cla, n_class = 10, repeat = 50, method =
     purity = np.array(purity)
     return np.mean(purity), np.std(purity)
 
-def compute_MW_objective_average(model, data, cla, n_class = 10, repeat = 50, method = "ward", eval = "VaDE", transform = False, VERBOSE = False, super_class = False):
+def compute_MW_objective_average(model, data, cla, n_class = 10, c_num = 100, repeat = 50, method = "ward", eval = "VaDE", transform = False, VERBOSE = False, super_class = False):
     similarity_matrix = np.zeros((25,25))
     for i in range(5):
         similarity_matrix[i*5:(i+1)*5, i*5:(i+1)*5] = np.ones((5,5)) + np.identity(5)
@@ -140,15 +140,15 @@ def compute_MW_objective_average(model, data, cla, n_class = 10, repeat = 50, me
     for i in range(25):
         index = np.where(cla.detach().numpy() == i)
         cifar100_data.append(data[index])
-    num = 64 * 25
+    num = c_num * 25
     print("repeat:", repeat)
     for i in range(repeat):
         test_X = torch.Tensor([])
         test_Y = np.array([])
         for i in range(25):
-            index = np.random.choice(np.arange(600), 64)
+            index = np.random.choice(np.arange(600), c_num)
             test_X = torch.cat([test_X, cifar100_data[i][index]])
-            test_Y = np.concatenate([test_Y, i * np.ones(64)])
+            test_Y = np.concatenate([test_Y, i * np.ones(c_num)])
 
         h_Y = np.zeros_like(test_Y)
         h_Y[np.where(test_Y >= 5)] = 1
