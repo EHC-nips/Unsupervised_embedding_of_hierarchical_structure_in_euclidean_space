@@ -12,6 +12,8 @@ To install requirements:
 pip install -r requirements.txt
 ```
 
+Required Datasets will be downloaded automatically while running the code
+
 ## Training
 
 To train and evaluate the model on synthetic data, run this command:
@@ -21,7 +23,7 @@ cd synthetic/
 python synthetic_experiments.py --n_class 8 --margin 8 --variance 1 --dim 100 --hidden_dim 3 --linkage_method ward --learning_rate 1e-3
 ```
 
-> 📋The above command will give you the result for the BTGM in Figure 1 in our paper. 
+> The above command will give you the result for the BTGM in Figure 1 in our paper. 
 
 ## Pre-trained Models
 
@@ -53,6 +55,3 @@ Our proposed method achieves the following performance in terms of Dendrogram Pu
 | VaDE+Ward+Trans.(DP)|      0.870      |     0.120      |      0.670      |
 | VaDE+Ward+Trans.(MW)|      0.948      |     0.465      |      0.756      |
 
-## Contributing
-
-> 📋Pick a licence and describe how to contribute to your code repository. 
