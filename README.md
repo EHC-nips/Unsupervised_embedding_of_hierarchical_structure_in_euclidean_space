@@ -50,8 +50,8 @@ python MNIST_experiments.py --linkage_method ward --embedding_method VaDE --resc
 Our proposed method achieves the following performance in terms of Dendrogram Purity and Moseley-Wang's objective :
 
 
-| Model name         |      MNIST      |    CIFAR-25    |     reuters     |
-| ------------------ |---------------- | -------------- | --------------- |
-| VaDE+Ward+Trans.(DP)|      0.870      |     0.120      |      0.670      |
-| VaDE+Ward+Trans.(MW)|      0.948      |     0.465      |      0.756      |
+| Model name         |      MNIST      |    CIFAR-25    |     reuters     |     20newsgroups   |
+| ------------------ |---------------- | -------------- | --------------- | -------------------|
+| VaDE+Ward+Trans.(DP)|      0.886      |     0.128      |      0.672      |      0.251        |
+| VaDE+Ward+Trans.(MW)|      0.955      |     0.472      |      0.768      |      0.606        |
 
