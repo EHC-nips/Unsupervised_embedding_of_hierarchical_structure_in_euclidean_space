@@ -1,7 +1,7 @@
 
 # Unsupervised Embedding of Hierarchical Structure in Euclidean Space
 
-This repository is the official implementation of [Unsupervised Embedding of Hierarchical Structure in Euclidean Space](https://arxiv.org). 
+This repository is the official implementation of [Unsupervised Embedding of Hierarchical Structure in Euclidean Space](https://arxiv.org/abs/2010.16055). 
 
 
 ## Requirements
